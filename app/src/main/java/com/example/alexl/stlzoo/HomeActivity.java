@@ -3,10 +3,14 @@ package com.example.alexl.stlzoo;
 import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -16,6 +20,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.AppIndex;
@@ -23,11 +29,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -36,6 +44,10 @@ public class HomeActivity extends AppCompatActivity {
     LocationRequest mLocationRequest;
     PendingResult<LocationSettingsResult> result;
     static final Integer GPS_SETTINGS = 0x7;
+    private String homeActivity;
+    LocationManager locationManager;
+    static final int REQUEST_LOCATION = 1;
+
 
 
     @Override
@@ -44,12 +56,44 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
-
         client = new GoogleApiClient.Builder(this)
                 .addApi(AppIndex.API)
         .addApi(LocationServices.API)
         .build();
+
+
+
+        Button goToMaps = (Button) findViewById(R.id.location);
+        goToMaps.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                homeActivity = "home";
+                Intent switchToMaps = new Intent(HomeActivity.this, MapsActivity.class);
+                switchToMaps.putExtra("coming from home", "home");
+                switchToMaps.putExtra("Home Activity", homeActivity);
+                startActivity(switchToMaps);
+                finish();
+            }
+        });
 }
+
+    void getLocation(){
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        }else{
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if(location != null){
+                double latti = location.getLatitude();
+                double longi = location.getLongitude();
+                Log.e("Location", "lat: "+latti+" long: "+longi);
+            }else{
+                Log.e("Loaction","location is null");
+
+            }
+        }
+    }
+
 
     private void askForPermission(String permission, Integer requestCode) {
         if (ContextCompat.checkSelfPermission(HomeActivity.this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -74,6 +118,10 @@ public class HomeActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         client.connect();
+        ask();
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        getLocation();
+
     }
 
     @Override
@@ -112,14 +160,14 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    public void ask(View v){
-        switch (v.getId()){
-            case R.id.location:
+    public void ask(){
+        /*switch (v.getId()){
+            case R.id.location:*/
                 askForPermission(Manifest.permission.ACCESS_FINE_LOCATION,LOCATION);
-                break;
+                /*break;
             default:
                 break;
-        }
+        }*/
     }
 
     @Override
