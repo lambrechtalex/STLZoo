@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.AppIndex;
@@ -31,6 +32,8 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 
 public class HomeActivity extends AppCompatActivity {
 
+    Button btnViewAnimals;
+
     static final Integer LOCATION = 0x1;
     GoogleApiClient client;
     LocationRequest mLocationRequest;
@@ -43,13 +46,23 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
-
         client = new GoogleApiClient.Builder(this)
                 .addApi(AppIndex.API)
         .addApi(LocationServices.API)
         .build();
-}
+
+        btnViewAnimals = (Button) findViewById(R.id.btnViewAnimals);
+        btnViewAnimals.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                // Launching All products Activity
+                Intent i = new Intent(getApplicationContext(), AllAnimalsActivity.class);
+                startActivity(i);
+            }
+        });
+
+    }
 
     private void askForPermission(String permission, Integer requestCode) {
         if (ContextCompat.checkSelfPermission(HomeActivity.this, permission) != PackageManager.PERMISSION_GRANTED) {
