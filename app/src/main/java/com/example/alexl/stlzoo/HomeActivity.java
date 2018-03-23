@@ -39,6 +39,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 public class HomeActivity extends AppCompatActivity {
 
+    Button btnViewAnimals;
+
     static final Integer LOCATION = 0x1;
     GoogleApiClient client;
     LocationRequest mLocationRequest;
@@ -60,6 +62,15 @@ public class HomeActivity extends AppCompatActivity {
                 .addApi(AppIndex.API)
         .addApi(LocationServices.API)
         .build();
+
+        btnViewAnimals = (Button) findViewById(R.id.btnViewAnimals);
+        btnViewAnimals.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent i = new Intent(getApplicationContext(), AllAnimalsActivity.class);
+                startActivity(i);
+            }
+        });
 
 
 
