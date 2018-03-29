@@ -41,6 +41,42 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label="All Animals" >
         </activity>
+        <activity
+            android:name=".RiversEdgeActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="River's Edge" >
+        </activity>
+        <activity
+            android:name=".DiscoveryCenterActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Discovery Center" >
+        </activity>
+        <activity
+        android:name=".HistoricHillActivity"
+        android:theme="@style/AppTheme.NoActionBar"
+        android:label="HistoricHillActivity" >
+        </activity>
+        <activity
+            android:name=".LakesideCrossingActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Discovery Center" >
+        </activity>
+        <activity
+            android:name=".RedRocksActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Red Rocks Activity" >
+        </activity>
+        <activity
+            android:name=".TheWildActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="The WIld Activity" >
+        </activity>
+        <activity
+            android:name=".DiningActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Dining Locations" >
+        </activity>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

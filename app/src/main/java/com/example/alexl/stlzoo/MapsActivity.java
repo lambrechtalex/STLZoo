@@ -1,9 +1,18 @@
 package com.example.alexl.stlzoo;
 
+import android.content.Intent;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 
@@ -22,6 +31,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
     private MapView mapView;
     private GoogleMap mMap;
+    private DrawerLayout mDrawer;
+    private Toolbar toolbar;
+    private NavigationView nvView;
 
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
 
@@ -34,10 +46,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
           //      .findFragmentById(R.id.map);
         //mapFragment.getMapAsync(this);
 
-        Toolbar tb = findViewById(R.id.toolbar);
-        setSupportActionBar(tb);
-        tb.setSubtitle("MapView");
-
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
@@ -47,7 +55,66 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
 
+        // Set a Toolbar to replace the ActionBar.
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Find our drawer view
+        mDrawer = findViewById(R.id.drawer_layout);
+
+        nvView = findViewById(R.id.nvView);
+
+        nvView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            // This method will trigger on item Click of navigation menu
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                if(menuItem.getItemId() == R.id.rivers_edge){
+                    Log.d("Entered case 1", "Entered case1");
+                    Intent riverAct = new Intent(getApplicationContext(), RiversEdgeActivity.class);
+                    startActivity(riverAct);
+                }
+                if(menuItem.getItemId() == R.id.the_wild) {
+                    Intent wildAct = new Intent(getApplicationContext(), TheWildActivity.class);
+                    startActivity(wildAct);
+                }
+                if(menuItem.getItemId() == R.id.discovery_center) {
+                    Intent discoveryAct = new Intent(getApplicationContext(), DiscoveryCenterActivity.class);
+                    startActivity(discoveryAct);
+                }
+                if(menuItem.getItemId() == R.id.historic_hill) {
+                    Intent historicAct = new Intent(getApplicationContext(), HistoricHillActivity.class);
+                    startActivity(historicAct);
+                }
+                if(menuItem.getItemId() == R.id.lakeside_crossing) {
+                    Intent lakesideAct = new Intent(getApplicationContext(), LakesideCrossingActivity.class);
+                    startActivity(lakesideAct);
+                }
+                if(menuItem.getItemId() == R.id.red_rocks) {
+                    Intent redAct = new Intent(getApplicationContext(), RedRocksActivity.class);
+                    startActivity(redAct);
+                }
+                if(menuItem.getItemId() == R.id.dining) {
+                    Intent diningAct = new Intent(getApplicationContext(), DiningActivity.class);
+                    startActivity(diningAct);
+                }
+                if(menuItem.getItemId() == R.id.map) {
+                    Intent mapAct = new Intent(getApplicationContext(), MapsActivity.class);
+                    startActivity(mapAct);
+                }
+
+                mDrawer.closeDrawers();
+                return true;
+
+            }
+        });
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.drawer, menu);
+        return true;
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

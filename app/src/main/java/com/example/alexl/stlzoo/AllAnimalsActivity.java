@@ -36,7 +36,7 @@ public class AllAnimalsActivity extends ListActivity {
     ArrayList<HashMap<String, String>> animalsList;
 
     // url to get all products list
-    private static String url_all_animals = "http://franzcars.mynetgear.com:443/allAnimals.php";
+    private static String url_all_animals = "http://franzcars.mynetgear.com:443/sec6Animals.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
