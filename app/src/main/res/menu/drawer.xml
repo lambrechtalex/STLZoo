@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<group android:checkableBehavior="single">
+    <item
+        android:id="@+id/rivers_edge"
+        android:icon="@drawable/blue_square"
+        android:title="River's Edge" />
+    <item
+        android:id="@+id/the_wild"
+        android:icon="@drawable/blue_square"
+        android:title="The Wild" />
+    <item
+        android:id="@+id/discovery_center"
+        android:icon="@drawable/blue_square"
+        android:title="Discovery Center" />
+    <item
+        android:id="@+id/historic_hill"
+        android:icon="@drawable/blue_square"
+        android:title="Historic Hill" />
+    <item
+        android:id="@+id/lakeside_crossing"
+        android:icon="@drawable/blue_square"
+        android:title="Lakeside Crossing" />
+    <item
+        android:id="@+id/red_rocks"
+        android:icon="@drawable/blue_square"
+        android:title="Red Rocks" />
+    <item
+        android:id="@+id/dining"
+        android:icon="@drawable/blue_square"
+        android:title="Dining" />
+    <item
+        android:id="@+id/map"
+        android:icon="@drawable/blue_square"
+        android:title="Map" />
+</group>
+</menu>
