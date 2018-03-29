@@ -101,7 +101,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Intent mapAct = new Intent(getApplicationContext(), MapsActivity.class);
                     startActivity(mapAct);
                 }
-
+                if(menuItem.getItemId() == R.id.events) {
+                    Intent eventsAct = new Intent(getApplicationContext(), EventsActivity.class);
+                    startActivity(eventsAct);
+                }
                 mDrawer.closeDrawers();
                 return true;
 

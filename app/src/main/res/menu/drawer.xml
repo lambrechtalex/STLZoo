@@ -33,5 +33,9 @@
         android:id="@+id/map"
         android:icon="@drawable/blue_square"
         android:title="Map" />
+    <item
+        android:id="@+id/events"
+        android:icon="@drawable/blue_square"
+        android:title="Events" />
 </group>
 </menu>
