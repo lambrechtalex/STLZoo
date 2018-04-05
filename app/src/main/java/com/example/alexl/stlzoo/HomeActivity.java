@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
                 .addApi(AppIndex.API)
         .addApi(LocationServices.API)
         .build();
-
+        /*
         btnViewAnimals = (Button) findViewById(R.id.btnViewAnimals);
         btnViewAnimals.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -70,10 +70,10 @@ public class HomeActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), AllAnimalsActivity.class);
                 startActivity(i);
             }
-        });
+        });*/
 
 
-
+        /*
         Button goToMaps = (Button) findViewById(R.id.location);
         goToMaps.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -84,7 +84,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(switchToMaps);
                 finish();
             }
-        });
+        });*/
 }
 
     void getLocation(){
@@ -121,7 +121,13 @@ public class HomeActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(HomeActivity.this, new String[]{permission}, requestCode);
             }
         } else {
-            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+            homeActivity = "home";
+            Intent switchToMaps = new Intent(HomeActivity.this, MapsActivity.class);
+            switchToMaps.putExtra("coming from home", "home");
+            switchToMaps.putExtra("Home Activity", homeActivity);
+            startActivity(switchToMaps);
+            finish();
+            //Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -223,17 +229,23 @@ public class HomeActivity extends AppCompatActivity {
                     }
             }
 
-            Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+            homeActivity = "home";
+            Intent switchToMaps = new Intent(HomeActivity.this, MapsActivity.class);
+            switchToMaps.putExtra("coming from home", "home");
+            switchToMaps.putExtra("Home Activity", homeActivity);
+            startActivity(switchToMaps);
+            finish();
         }else{
-            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
         }
     }
-
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        return false;
     }
 
     @Override
@@ -244,10 +256,13 @@ public class HomeActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+    */
+
 }

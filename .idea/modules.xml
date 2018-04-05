@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/STLZoo.iml" filepath="$PROJECT_DIR$/STLZoo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/STLZooApp.iml" filepath="$PROJECT_DIR$/.idea/STLZooApp.iml" />
+      <module fileurl="file://C:\Users\AlexL\AndroidStudioProjects\STLZoo\.idea\STLZooApp.iml" filepath="C:\Users\AlexL\AndroidStudioProjects\STLZoo\.idea\STLZooApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

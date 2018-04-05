@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,7 +32,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
     private MapView mapView;
     private GoogleMap mMap;
-    private DrawerLayout mDrawer;
+    private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
     private NavigationView nvView;
 
@@ -58,11 +59,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Set a Toolbar to replace the ActionBar.
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
 
         // Find our drawer view
-        mDrawer = findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
 
         nvView = findViewById(R.id.nvView);
+        nvView.setItemIconTintList(null);
 
         nvView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -105,18 +110,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Intent eventsAct = new Intent(getApplicationContext(), EventsActivity.class);
                     startActivity(eventsAct);
                 }
-                mDrawer.closeDrawers();
+                mDrawerLayout.closeDrawers();
                 return true;
 
             }
         });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.drawer, menu);
         return true;
-    }
+    }*/
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

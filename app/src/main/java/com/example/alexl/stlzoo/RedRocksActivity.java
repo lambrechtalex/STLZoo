@@ -13,20 +13,30 @@ import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -34,7 +44,7 @@ import android.widget.TextView;
  * Created by samikshasm on 3/28/18.
  */
 
-public class RedRocksActivity extends ListActivity {
+public class RedRocksActivity extends AppCompatActivity {
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -42,10 +52,21 @@ public class RedRocksActivity extends ListActivity {
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
 
-    ArrayList<HashMap<String, String>> animalsList; 
+    ArrayList<HashMap<String, String>> animalsList;
+    ArrayList<String> species_list;
+    ArrayList<String> species_id;
+    ArrayList<String> sc_name;
+    ArrayList<String> list_names;
+    ArrayList<String> end_status_list;
+    ArrayList<String> region_list;
+    ArrayList<String> diet_list;
+
+
 
     // url to get all products list
-    private static String url_all_animals = "http://franzcars.mynetgear.com:443/sec6Animals.php";
+    private static String url_sec3_animals = "http://franzcars.mynetgear.com:443/sec6Animals.php";
+    private static String url_animal_info = "http://franzcars.mynetgear.com:443/allSpecies.php";
+
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -57,8 +78,16 @@ public class RedRocksActivity extends ListActivity {
     private Toolbar toolbar;
     private NavigationView nvView;
 
+    private PopupWindow mPopupWindow;
+    private RelativeLayout mRelativeLayout;
+
+    private ListView lv;
+
+
     // products JSONArray
     JSONArray animals = null;
+    JSONArray animal_info = null;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,12 +96,31 @@ public class RedRocksActivity extends ListActivity {
 
         // Hashmap for ListView
         animalsList = new ArrayList<HashMap<String, String>>();
+        species_list = new ArrayList<String>();
+        species_id = new ArrayList<String>();
+        sc_name = new ArrayList<String>();
+        list_names = new ArrayList<String>();
+        end_status_list = new ArrayList<String>();
+        region_list = new ArrayList<String>();
+        diet_list = new ArrayList<String>();
+        mRelativeLayout = (RelativeLayout) findViewById(R.id.rl);
+
+
+
 
         // Loading products in Background Thread
-        new LoadAllAnimals().execute();
+        new RedRocksActivity.LoadAllAnimals().execute();
 
         // Get listview
-        ListView lv = getListView();
+        lv = (ListView) findViewById(R.id.animals_list);
+
+
+        TextView header = findViewById(R.id.header);
+        int height = 0; //your textview height
+        header.getLayoutParams().height = height;
+
+        Button toDoList = findViewById(R.id.toDoList);
+        toDoList.getLayoutParams().height = height;
 
         // on seleting single product
         // launching Edit Product Screen
@@ -82,8 +130,11 @@ public class RedRocksActivity extends ListActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // getting values from selected ListItem
-                String Animal_ID = ((TextView) view.findViewById(R.id.Animal_ID)).getText()
+                String Animal_ID = ((TextView) view.findViewById(R.id.Name)).getText()
                         .toString();
+                //Toast.makeText(DiscoveryCenterActivity.this, Animal_ID, Toast.LENGTH_SHORT).show();
+                showAnimalInfo(Animal_ID,position);
+
 
                 // Starting new intent
                 //Intent in = new Intent(getApplicationContext(),
@@ -100,17 +151,19 @@ public class RedRocksActivity extends ListActivity {
         /*toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
 
+        // Set a Toolbar to replace the ActionBar.
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+
         // Find our drawer view
         mDrawer = findViewById(R.id.drawer_layout);
 
         nvView = findViewById(R.id.nvView);
+        nvView.setItemIconTintList(null);
 
-        TextView header = findViewById(R.id.header);
-        int height = 0; //your textview height
-        header.getLayoutParams().height = height;
-
-        Button toDoList = findViewById(R.id.toDoList);
-        toDoList.getLayoutParams().height = height;
 
         nvView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -159,14 +212,114 @@ public class RedRocksActivity extends ListActivity {
             }
         });
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.drawer, menu);
-        return true;
+    public void showAnimalInfo(String Animal_ID, int position){
+        Log.d("species_id", species_id+"");
+        for(int i = 0; i < species_id.size(); i++){
+            for(int j = 0; j < species_list.size(); j++){
+                if (species_id.get(i).equals(species_list.get(j))){
+                    list_names.add(sc_name.get(j));
+                }
+            }
+        }
+        String scientific_name = list_names.get(position);
+        String region = region_list.get(position);
+        String end_status = end_status_list.get(position);
+        String diet = diet_list.get(position);
+        Log.d("animal_info", scientific_name+","+region+","+end_status+","+diet);
+        //Log.d("scientific_name", sc_name+"");
+
+        // Initialize a new instance of LayoutInflater service
+        LayoutInflater inflater = (LayoutInflater) RedRocksActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        // Inflate the custom layout/view
+        View customView = inflater.inflate(R.layout.pop_up_window,null);
+
+                /*
+                    public PopupWindow (View contentView, int width, int height)
+                        Create a new non focusable popup window which can display the contentView.
+                        The dimension of the window must be passed to this constructor.
+
+                        The popup does not provide any background. This should be handled by
+                        the content view.
+
+                    Parameters
+                        contentView : the popup's content
+                        width : the popup's width
+                        height : the popup's height
+                */
+        // Initialize a new instance of popup window
+        mPopupWindow = new PopupWindow(
+                customView,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+
+        // Set an elevation value for popup window
+        // Call requires API level 21
+        if(Build.VERSION.SDK_INT>=21){
+            mPopupWindow.setElevation(5.0f);
+        }
+
+        // Get a reference for the custom view close button
+        ImageButton closeButton = (ImageButton) customView.findViewById(R.id.ib_close);
+        TextView animal_name_tv = (TextView) customView.findViewById(R.id.animal_name);
+        animal_name_tv.setText(Animal_ID);
+        TextView species_name_tv = (TextView) customView.findViewById(R.id.species_name);
+        species_name_tv.setText(scientific_name);
+        TextView region_name_tv = (TextView) customView.findViewById(R.id.region_name);
+        region_name_tv.setText(region);
+        TextView diet_name_tv = (TextView) customView.findViewById(R.id.diet_name);
+        diet_name_tv.setText(diet);
+        TextView status_name_tv = (TextView) customView.findViewById(R.id.status_name);
+        status_name_tv.setText(end_status);
+        RelativeLayout relLayout = (RelativeLayout) customView.findViewById(R.id.rl_custom_layout);
+        relLayout.setBackgroundColor(getResources().getColor(R.color.redRocks));
+
+        // Set a click listener for the popup window close button
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Dismiss the popup window
+                mPopupWindow.dismiss();
+            }
+        });
+
+                /*
+                    public void showAtLocation (View parent, int gravity, int x, int y)
+                        Display the content view in a popup window at the specified location. If the
+                        popup window cannot fit on screen, it will be clipped.
+                        Learn WindowManager.LayoutParams for more information on how gravity and the x
+                        and y parameters are related. Specifying a gravity of NO_GRAVITY is similar
+                        to specifying Gravity.LEFT | Gravity.TOP.
+
+                    Parameters
+                        parent : a parent view to get the getWindowToken() token from
+                        gravity : the gravity which controls the placement of the popup window
+                        x : the popup's x location offset
+                        y : the popup's y location offset
+                */
+        // Finally, show the popup window at the center location of root relative layout
+        mPopupWindow.showAtLocation(mRelativeLayout, Gravity.CENTER,0,0);
+
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawer.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    /*
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu){
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.drawer, menu);
+            return true;
+        }
 
-
+    */
     // Response from Edit Product Activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -188,6 +341,7 @@ public class RedRocksActivity extends ListActivity {
      * */
     class LoadAllAnimals extends AsyncTask<String, String, String> {
 
+
         /**
          * Before starting background thread Show Progress Dialog
          * */
@@ -208,10 +362,12 @@ public class RedRocksActivity extends ListActivity {
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(url_all_animals, "GET", params);
+            JSONObject json = jParser.makeHttpRequest(url_sec3_animals, "GET", params);
+            JSONObject animal_json = jParser.makeHttpRequest(url_animal_info, "GET", params);
 
             // Check your log cat for JSON reponse
-            Log.d("Product: ", json.toString());
+            Log.d("Product: ", animal_json.toString());
+
 
             try {
                 // Checking for SUCCESS TAG
@@ -221,6 +377,21 @@ public class RedRocksActivity extends ListActivity {
                     // animals found
                     // Getting Array of Animals
                     animals = json.getJSONArray("animal");
+                    animal_info = animal_json.getJSONArray("section");
+
+                    for(int i = 0; i < animal_info.length(); i++){
+                        JSONObject c = animal_info.getJSONObject(i);
+                        String id = c.getString("Species_ID");
+                        String sci_name = c.getString("Scientific_name");
+                        String end_status = c.getString("Endangered_Status");
+                        String region = c.getString("Region");
+                        String diet = c.getString("Diet");
+                        species_list.add(id);
+                        sc_name.add(sci_name);
+                        end_status_list.add(end_status);
+                        region_list.add(region);
+                        diet_list.add(diet);
+                    }
 
                     // looping through All Products
                     for (int i = 0; i < animals.length(); i++) {
@@ -228,6 +399,8 @@ public class RedRocksActivity extends ListActivity {
 
                         // Storing each json item in variable
                         String id = c.getString("Animal_ID");
+                        String species_id_str = c.getString("Species_ID");
+                        species_id.add(species_id_str);
                         String name = c.getString(TAG_NAME);
 
                         // creating new HashMap
@@ -264,9 +437,20 @@ public class RedRocksActivity extends ListActivity {
                             RedRocksActivity.this, animalsList,
                             R.layout.list_animal, new String[] { TAG_ANIMAL_ID,
                             TAG_NAME},
-                            new int[] { R.id.Animal_ID, R.id.Name });
+                            new int[] { R.id.Animal_ID, R.id.Name }){
+                        @Override
+                        public View getView(int position, View convertView, ViewGroup parent) {
+
+                            View view = super.getView(position, convertView, parent);
+                            TextView textView = (TextView) view.findViewById(R.id.Name);
+                            textView.setTextColor(getResources().getColor(R.color.redRocks));
+
+                            return textView;
+
+                        }
+                    };
                     // updating listview
-                    setListAdapter(adapter);
+                    lv.setAdapter(adapter);
                 }
             });
 

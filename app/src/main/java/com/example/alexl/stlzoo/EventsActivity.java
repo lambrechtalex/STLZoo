@@ -7,7 +7,10 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -43,7 +46,7 @@ import java.util.List;
 import android.widget.Toast;
 
 
-public class EventsActivity extends ListActivity {
+public class EventsActivity extends AppCompatActivity {
 
 
     // Progress Dialog
@@ -56,6 +59,7 @@ public class EventsActivity extends ListActivity {
     private TextView header;
     private String currentDate;
     private ArrayList<String> selectedItems = new ArrayList<>();
+    private ListView lv;
 
 
     // Creating JSON Parser object
@@ -91,7 +95,8 @@ public class EventsActivity extends ListActivity {
         new LoadAllAnimals().execute();
 
        // Get listview
-        final ListView lv = getListView();
+        lv = (ListView) findViewById(R.id.animals_list);
+        //final ListView lv = getListView();
         lv.setChoiceMode(lv.CHOICE_MODE_MULTIPLE);
 
 
@@ -108,14 +113,18 @@ public class EventsActivity extends ListActivity {
                 TextView textView = view.findViewById(R.id.Name);
                 textView.setTextColor(getResources().getColor(R.color.colorAccent));
 
+
                 if (selectedItems.size()!=0) {
                     toDoList.setVisibility(View.VISIBLE); //To set visible
                     toDoList.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View view){
+                            Toast.makeText(EventsActivity.this, "Added", Toast.LENGTH_SHORT).show();
+                            /*
                             Intent i = new Intent(getApplicationContext(), ToDoList.class);
                             i.putStringArrayListExtra("To Do List Items", selectedItems);
                             startActivity(i);
+                            */
                         }
                     });
                 }
@@ -131,6 +140,15 @@ public class EventsActivity extends ListActivity {
         mDrawer = findViewById(R.id.drawer_layout);
 
         nvView = findViewById(R.id.nvView);
+        nvView.setItemIconTintList(null);
+
+        // Set a Toolbar to replace the ActionBar.
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+
 
         header = findViewById(R.id.header);
 
@@ -197,11 +215,20 @@ public class EventsActivity extends ListActivity {
     }*/
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawer.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }/*
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.drawer, menu);
         return true;
-    }
+    }*/
 
     // Response from Edit Product Activity
     @Override
@@ -310,7 +337,7 @@ public class EventsActivity extends ListActivity {
                             TAG_NAME},
                             new int[] { R.id.Animal_ID, R.id.Name });
                     // updating listview
-                    setListAdapter(adapter);
+                    lv.setAdapter(adapter);
                 }
             });
 
