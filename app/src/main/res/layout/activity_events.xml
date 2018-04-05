@@ -25,14 +25,16 @@
             android:background="?attr/colorPrimaryDark">
         </android.support.v7.widget.Toolbar>
 
-        <CalendarView
-            android:id="@+id/simpleCalendarView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:firstDayOfWeek="2"
-            android:maxDate="01/01/2020"
-            android:minDate="01/01/2018" />
 
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/toDoList"/>
         <!-- The main content view where fragments are loaded -->
         <FrameLayout
             android:id="@+id/flContent"

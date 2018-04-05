@@ -81,6 +81,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label="Events" >
         </activity>
+        <activity
+            android:name=".ToDoList"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="ToDoList" >
+        </activity>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

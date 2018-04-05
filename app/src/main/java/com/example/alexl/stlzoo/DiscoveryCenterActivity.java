@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -72,6 +73,14 @@ public class DiscoveryCenterActivity extends ListActivity {
 
         // Get listview
         ListView lv = getListView();
+
+
+        TextView header = findViewById(R.id.header);
+        int height = 0; //your textview height
+        header.getLayoutParams().height = height;
+
+        Button toDoList = findViewById(R.id.toDoList);
+        toDoList.getLayoutParams().height = height;
 
         // on seleting single product
         // launching Edit Product Screen
@@ -141,7 +150,10 @@ public class DiscoveryCenterActivity extends ListActivity {
                     Intent mapAct = new Intent(getApplicationContext(), MapsActivity.class);
                     startActivity(mapAct);
                 }
-
+                if(menuItem.getItemId() == R.id.events) {
+                    Intent eventsAct = new Intent(getApplicationContext(), EventsActivity.class);
+                    startActivity(eventsAct);
+                }
                 mDrawer.closeDrawers();
                 return true;
 
