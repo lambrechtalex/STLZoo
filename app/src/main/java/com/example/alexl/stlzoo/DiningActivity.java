@@ -124,7 +124,7 @@ public class DiningActivity extends AppCompatActivity {
 
         // on seleting single product
         // launching Edit Product Screen
-        lv1.setOnItemClickListener(new OnItemClickListener() {
+        /*lv1.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -142,7 +142,7 @@ public class DiningActivity extends AppCompatActivity {
                 // starting new activity and expecting some response back
                 //startActivityForResult(in, 100);
             }
-        });
+        });*/
         mDrawer = findViewById(R.id.drawer_layout);
 
         nvView = findViewById(R.id.nvView);

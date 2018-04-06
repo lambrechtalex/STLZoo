@@ -1,10 +1,10 @@
 <!-- This DrawerLayout has two children at the root  -->
 <android.support.v4.widget.DrawerLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:id="@+id/drawer_layout"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
 
@@ -31,20 +31,19 @@ android:layout_height="match_parent">
                 android:minHeight="?attr/actionBarSize"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"></android.support.v7.widget.Toolbar>
 
-
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_above="@+id/animals_list"
+                android:textSize="32dp"
                 />
 
+
             <ListView
-                android:id="@+id/simpleListView"
+                android:id="@+id/animals_list"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:divider="@color/material_blue_grey_800"
-                android:dividerHeight="1dp" />
+                android:layout_height="wrap_content" />
 
 
             <!-- The main content view where fragments are loaded -->

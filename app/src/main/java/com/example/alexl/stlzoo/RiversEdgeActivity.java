@@ -12,6 +12,10 @@ import org.json.JSONObject;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -93,6 +97,9 @@ public class RiversEdgeActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_animals);
+        final View view = findViewById(R.id.drawer_layout);
+        view.setBackgroundColor(getResources().getColor(R.color.riversEdge));
+
 
         // Hashmap for ListView
         animalsList = new ArrayList<HashMap<String, String>>();
@@ -113,6 +120,7 @@ public class RiversEdgeActivity extends AppCompatActivity {
 
         // Get listview
         lv = (ListView) findViewById(R.id.animals_list);
+        lv.setBackground(new ColorDrawable(getResources().getColor(R.color.riversEdge)));
 
 
         TextView header = findViewById(R.id.header);
@@ -157,14 +165,13 @@ public class RiversEdgeActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        actionbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.riversEdgeDark)));
 
         // Find our drawer view
         mDrawer = findViewById(R.id.drawer_layout);
 
         nvView = findViewById(R.id.nvView);
         nvView.setItemIconTintList(null);
-
-
         nvView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             // This method will trigger on item Click of navigation menu
@@ -212,6 +219,7 @@ public class RiversEdgeActivity extends AppCompatActivity {
             }
         });
     }
+
     public void showAnimalInfo(String Animal_ID, int position){
         Log.d("species_id", species_id+"");
         for(int i = 0; i < species_id.size(); i++){
@@ -230,6 +238,7 @@ public class RiversEdgeActivity extends AppCompatActivity {
 
         // Initialize a new instance of LayoutInflater service
         LayoutInflater inflater = (LayoutInflater) RiversEdgeActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+
 
         // Inflate the custom layout/view
         View customView = inflater.inflate(R.layout.pop_up_window,null);
@@ -263,17 +272,22 @@ public class RiversEdgeActivity extends AppCompatActivity {
         // Get a reference for the custom view close button
         ImageButton closeButton = (ImageButton) customView.findViewById(R.id.ib_close);
         TextView animal_name_tv = (TextView) customView.findViewById(R.id.animal_name);
+        animal_name_tv.setTextColor(getResources().getColor(R.color.riversEdgeDark));
         animal_name_tv.setText(Animal_ID);
         TextView species_name_tv = (TextView) customView.findViewById(R.id.species_name);
         species_name_tv.setText(scientific_name);
+        species_name_tv.setTextColor(getResources().getColor(R.color.riversEdgeDark));
         TextView region_name_tv = (TextView) customView.findViewById(R.id.region_name);
         region_name_tv.setText(region);
+        region_name_tv.setTextColor(getResources().getColor(R.color.riversEdgeDark));
         TextView diet_name_tv = (TextView) customView.findViewById(R.id.diet_name);
         diet_name_tv.setText(diet);
+        diet_name_tv.setTextColor(getResources().getColor(R.color.riversEdgeDark));
         TextView status_name_tv = (TextView) customView.findViewById(R.id.status_name);
         status_name_tv.setText(end_status);
+        status_name_tv.setTextColor(getResources().getColor(R.color.riversEdgeDark));
         RelativeLayout relLayout = (RelativeLayout) customView.findViewById(R.id.rl_custom_layout);
-        relLayout.setBackgroundColor(getResources().getColor(R.color.riversEdge));
+        relLayout.setBackgroundColor(getResources().getColor(R.color.white));
 
         // Set a click listener for the popup window close button
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -443,7 +457,7 @@ public class RiversEdgeActivity extends AppCompatActivity {
 
                             View view = super.getView(position, convertView, parent);
                             TextView textView = (TextView) view.findViewById(R.id.Name);
-                            textView.setTextColor(getResources().getColor(R.color.riversEdge));
+                            textView.setTextColor(getResources().getColor(R.color.white));
 
                             return textView;
 

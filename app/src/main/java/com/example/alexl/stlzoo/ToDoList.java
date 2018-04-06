@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ public class ToDoList extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvView;
+    private TextView textView;
 
     String countryList[] = {"India", "China", "australia", "Portugle", "America", "NewZealand"};
 
@@ -49,8 +51,10 @@ public class ToDoList extends AppCompatActivity {
             String separated = substr[1].replace(substr[1].substring(substr[1].length()-1), "");
             toDoListItems.add(separated);
         }
-        simpleList = (ListView)findViewById(R.id.simpleListView);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.activity_todo, R.id.textView, toDoListItems);
+        textView = (TextView) findViewById(R.id.textView);
+        textView.setText("To-Do List");
+        simpleList = (ListView)findViewById(R.id.animals_list);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.list_animal, R.id.Name, toDoListItems);
         simpleList.setAdapter(arrayAdapter);
 
         mDrawer = findViewById(R.id.drawer_layout);

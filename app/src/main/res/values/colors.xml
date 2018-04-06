@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="riversEdge">#b65415</color>
+    <color name="riversEdgeDark">#7c3c1a</color>
     <color name="theWild">#534e86</color>
     <color name="lakesideCrossing">#e7a714</color>
     <color name="discoveryCenter">#4c83c3</color>
