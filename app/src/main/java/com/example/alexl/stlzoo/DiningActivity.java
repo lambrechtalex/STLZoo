@@ -124,25 +124,22 @@ public class DiningActivity extends AppCompatActivity {
 
         // on seleting single product
         // launching Edit Product Screen
-        lv1.setOnItemClickListener(new OnItemClickListener() {
-
+        /*lv1.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // getting values from selected ListItem
                 String Animal_ID = ((TextView) view.findViewById(R.id.Animal_ID)).getText()
                         .toString();
-
                 // Starting new intent
                 //Intent in = new Intent(getApplicationContext(),
                 //EditProductActivity.class);
                 // sending pid to next activity
                 //in.putExtra(TAG_ANIMAL_ID, Animal_ID);
-
                 // starting new activity and expecting some response back
                 //startActivityForResult(in, 100);
             }
-        });
+        });*/
         mDrawer = findViewById(R.id.drawer_layout);
 
         nvView = findViewById(R.id.nvView);
