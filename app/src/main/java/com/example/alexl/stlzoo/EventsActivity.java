@@ -120,11 +120,11 @@ public class EventsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view){
                             Toast.makeText(EventsActivity.this, "Added", Toast.LENGTH_SHORT).show();
-                            /*
+
                             Intent i = new Intent(getApplicationContext(), ToDoList.class);
                             i.putStringArrayListExtra("To Do List Items", selectedItems);
                             startActivity(i);
-                            */
+
                         }
                     });
                 }
