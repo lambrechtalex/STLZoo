@@ -53,8 +53,11 @@ public class ToDoList extends AppCompatActivity {
         setContentView(R.layout.activity_todo);
         final Set<String> selectedItemsSet = getSelectedItemsList();
         final ArrayList<String> selectedItems = new ArrayList<String>();
-        for (String str : selectedItemsSet)
-            selectedItems.add(str);
+        if(selectedItemsSet != null){
+            for (String str : selectedItemsSet)
+                selectedItems.add(str);
+        }
+
 
 
         // Set a Toolbar to replace the ActionBar.
@@ -102,6 +105,9 @@ public class ToDoList extends AppCompatActivity {
         clearBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ArrayList<String> selectedItems = new ArrayList<String>();
+                for(int i = 0; i < selectedItemsSet.size(); i++){
+                    cancelAlarm(i);
+                }
                 storeSelectedItemsList(selectedItems);
                 textView.setText("No events added - go to Events tab");
                 simpleList.setAdapter(null);
@@ -191,6 +197,11 @@ public class ToDoList extends AppCompatActivity {
         AlarmManager mgrAlarm = (AlarmManager) getSystemService(ALARM_SERVICE);
         ArrayList<PendingIntent> intentArray = new ArrayList<PendingIntent>();
 
+        Log.e("timeIntItems",timeIntItems+"");
+
+        ArrayList<Integer> timeIntTest = new ArrayList<Integer>();
+        timeIntTest.add(22);
+
         for(int i = 0; i < timeIntItems.size(); ++i)
         {
             Integer setTimeTo = timeIntItems.get(i);
@@ -199,17 +210,37 @@ public class ToDoList extends AppCompatActivity {
             int difference = Math.abs(setTimeTo-hour);
             long diffHours = difference % 24;
 
-            Log.e("current time",  ""+diffHours);
+            Log.e("broadcast int",  ""+i);
+            Log.e("event name", toDoListItems.get(i));
+
+            Calendar morningCal = Calendar.getInstance();
+
+            Log.e("morningCal", morningCal.getTimeInMillis()+"");
 
             Intent intent = new Intent(ToDoList.this, TimerReceiver.class);
+            intent.putExtra("broadcast Int", i);
+            intent.putExtra("Event Name", toDoListItems.get(i));
             // Loop counter `i` is used as a `requestCode`
             PendingIntent pendingIntent = PendingIntent.getBroadcast(ToDoList.this, i, intent, 0);
+            mgrAlarm.set(AlarmManager.RTC_WAKEUP, morningCal.getTimeInMillis(), pendingIntent);
+
             // Single alarms in 1, 2, ..., 10 minutes (in `i` minutes)
+            /*
             mgrAlarm.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     SystemClock.elapsedRealtime() + (3600000 * diffHours),
                     pendingIntent);
 
             intentArray.add(pendingIntent);
+            */
         }
+    }
+
+    public void cancelAlarm(int broadcastID) {
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        resultIntent = new Intent(ToDoList.this, TimerReceiver.class);
+        pIntent = PendingIntent.getBroadcast(ToDoList.this, broadcastID, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pIntent);
+        pIntent.cancel();
+
     }
 }

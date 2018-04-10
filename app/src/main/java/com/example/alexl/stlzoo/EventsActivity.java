@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckedTextView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -68,6 +69,7 @@ public class EventsActivity extends AppCompatActivity {
     private ArrayList<Integer> positionItems = new ArrayList<>();
     private ListView lv;
     private TextView textView;
+    private TextView textView2;
 
 
 
@@ -115,7 +117,7 @@ public class EventsActivity extends AppCompatActivity {
         lv.setChoiceMode(lv.CHOICE_MODE_MULTIPLE);
 
         Set<String> selectedItemsSet = getSelectedItemsList();
-        if (selectedItemsSet.size() !=0) {
+        if (selectedItemsSet != null) {
             selectedItems = new ArrayList<String>();
             for (String str : selectedItemsSet)
                 selectedItems.add(str);
@@ -396,26 +398,31 @@ public class EventsActivity extends AppCompatActivity {
 
                         @Override
                         public View getView(int position, View convertView, ViewGroup parent) {
+                            View view = super.getView(position, convertView, parent);
+                            LinearLayout lin1 = (LinearLayout) view.findViewById(R.id.lin1);
 
                             if(!selectedItems.isEmpty()) {
-                                View view = super.getView(position, convertView, parent);
+
 
                                 for(int i=0; i<selectedItems.size(); i++){
                                     String[] substr = selectedItems.get(i).split(",");
                                     String getItem = substr[1].replace(substr[1].substring(substr[1].length()-1), "");
                                     String[] nameStr = getItem.split("=");
                                     textView= view.findViewById(R.id.Name);
+                                    textView2 = view.findViewById(R.id.Animal_ID);
+                                    textView2.setVisibility(View.VISIBLE);
                                     if(textView.getText().equals(nameStr[1])){
 
                                         textView.setTextColor(getResources().getColor(R.color.colorAccent));
                                     }
                                 }
                             }else{
-                                View view = super.getView(position, convertView, parent);
                                 textView = view.findViewById(R.id.Name);
                                 textView.setTextColor(getResources().getColor(R.color.theWild));
+                                textView2 = view.findViewById(R.id.Animal_ID);
+                                textView2.setVisibility(View.VISIBLE);
                             }
-                            return textView;
+                            return lin1;
                         }
 
 
