@@ -38,5 +38,9 @@
         android:id="@+id/events"
         android:icon="@drawable/ic_insert_invitation_black_24dp"
         android:title="Events" />
+    <item
+        android:id="@+id/toDoList"
+        android:icon="@drawable/ic_insert_invitation_black_24dp"
+        android:title="ToDoList" />
 </group>
 </menu>

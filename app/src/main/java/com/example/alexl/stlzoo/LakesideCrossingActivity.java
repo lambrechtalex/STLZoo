@@ -206,6 +206,10 @@ public class LakesideCrossingActivity extends AppCompatActivity {
                     Intent eventsAct = new Intent(getApplicationContext(), EventsActivity.class);
                     startActivity(eventsAct);
                 }
+                if(menuItem.getItemId() == R.id.toDoList) {
+                    Intent todoAct = new Intent(getApplicationContext(), ToDoList.class);
+                    startActivity(todoAct);
+                }
                 mDrawer.closeDrawers();
                 return true;
 

@@ -3,6 +3,7 @@ package com.example.alexl.stlzoo;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,7 +19,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckedTextView;
@@ -34,9 +37,12 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by samikshasm on 3/28/18.
@@ -59,7 +65,10 @@ public class EventsActivity extends AppCompatActivity {
     private TextView header;
     private String currentDate;
     private ArrayList<String> selectedItems = new ArrayList<>();
+    private ArrayList<Integer> positionItems = new ArrayList<>();
     private ListView lv;
+    private TextView textView;
+
 
 
     // Creating JSON Parser object
@@ -86,6 +95,9 @@ public class EventsActivity extends AppCompatActivity {
 
         // Hashmap for ListView
         diningList = new ArrayList<HashMap<String, String>>();
+        //selectedItems = new ArrayList<String>();
+        //storeSelectedItemsList(selectedItems);
+
         final Button toDoList = findViewById(R.id.toDoList);
         toDoList.setText("Add to Personal To-Do List");
         toDoList.setVisibility(View.GONE);
@@ -94,10 +106,20 @@ public class EventsActivity extends AppCompatActivity {
         // Loading products in Background Thread
         new LoadAllAnimals().execute();
 
-       // Get listview
+
+
+
+        // Get listview
         lv = (ListView) findViewById(R.id.animals_list);
         //final ListView lv = getListView();
         lv.setChoiceMode(lv.CHOICE_MODE_MULTIPLE);
+
+        Set<String> selectedItemsSet = getSelectedItemsList();
+        if (selectedItemsSet.size() !=0) {
+            selectedItems = new ArrayList<String>();
+            for (String str : selectedItemsSet)
+                selectedItems.add(str);
+        }
 
 
         // on seleting single product
@@ -110,8 +132,12 @@ public class EventsActivity extends AppCompatActivity {
 
                 String name = lv.getItemAtPosition(position).toString();
                 selectedItems.add(name);
+                positionItems.add(position);
+
+
                 TextView textView = view.findViewById(R.id.Name);
                 textView.setTextColor(getResources().getColor(R.color.colorAccent));
+
 
 
                 if (selectedItems.size()!=0) {
@@ -120,14 +146,14 @@ public class EventsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view){
                             Toast.makeText(EventsActivity.this, "Added", Toast.LENGTH_SHORT).show();
-
+                            storeSelectedItemsList(selectedItems);
                             Intent i = new Intent(getApplicationContext(), ToDoList.class);
-                            i.putStringArrayListExtra("To Do List Items", selectedItems);
                             startActivity(i);
 
                         }
                     });
                 }
+
             }
         });
 
@@ -201,11 +227,30 @@ public class EventsActivity extends AppCompatActivity {
                     Intent eventsAct = new Intent(getApplicationContext(), EventsActivity.class);
                     startActivity(eventsAct);
                 }
+                if(menuItem.getItemId() == R.id.toDoList) {
+                    Intent todoAct = new Intent(getApplicationContext(), ToDoList.class);
+                    startActivity(todoAct);
+                }
                 mDrawer.closeDrawers();
                 return true;
 
             }
         });
+
+     /*   lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, selectedItems) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View row = super.getView(position, convertView, parent);
+
+                for(int i=0; i<selectedItems.size(); i++){
+                    if(getItem(position).equals(selectedItems.get(i))){
+                        row.setBackgroundColor (Color.RED);
+                    }
+                }
+                return row;
+            }
+        });*/
+
     }
 
     /*public void onListItemClick(ListView parent, View v,int position,long id){
@@ -293,6 +338,7 @@ public class EventsActivity extends AppCompatActivity {
                         //String id = c.getString("Name");
                         String name = c.getString(TAG_NAME);
                         String date = c.getString("Date");
+                        String time = c.getString("Time");
 
 
                         // creating new HashMap
@@ -303,12 +349,14 @@ public class EventsActivity extends AppCompatActivity {
 
                         Log.d("Today's date: ", currentDate);
                         if (date.equals("2018-12-27") | date.equals("2018-12-03") | date.equals("2019-02-09")) {
-                          //  map.put("Date",date);
+                            //  map.put("Date",date);
                             map.put(TAG_NAME, name);
+                            map.put("Time", time);
                             diningList.add(map);
 
                         }
                         // adding HashList to ArrayList
+
                     }
                 }
             } catch (JSONException e) {
@@ -331,19 +379,71 @@ public class EventsActivity extends AppCompatActivity {
                     /**
                      * Updating parsed JSON data into ListView
                      * */
+                   /* final Set<String> selectedItemsSet = getSelectedItemsList();
+                    for (String str : selectedItemsSet)
+                        selectedItems.add(str); */
+
+
+                    Log.e("textView",""+selectedItems);
+
+
                     ListAdapter adapter = new SimpleAdapter(
                             EventsActivity.this, diningList,
-                            R.layout.list_animal, new String[] {TAG_ANIMAL_ID,
+                            R.layout.list_animal, new String[] {"Time",
                             TAG_NAME},
-                            new int[] { R.id.Animal_ID, R.id.Name });
+                            new int[] { R.id.Animal_ID, R.id.Name }){
+
+
+                        @Override
+                        public View getView(int position, View convertView, ViewGroup parent) {
+
+                            if(!selectedItems.isEmpty()) {
+                                View view = super.getView(position, convertView, parent);
+
+                                for(int i=0; i<selectedItems.size(); i++){
+                                    String[] substr = selectedItems.get(i).split(",");
+                                    String getItem = substr[1].replace(substr[1].substring(substr[1].length()-1), "");
+                                    String[] nameStr = getItem.split("=");
+                                    textView= view.findViewById(R.id.Name);
+                                    if(textView.getText().equals(nameStr[1])){
+
+                                        textView.setTextColor(getResources().getColor(R.color.colorAccent));
+                                    }
+                                }
+                            }else{
+                                View view = super.getView(position, convertView, parent);
+                                textView = view.findViewById(R.id.Name);
+                                textView.setTextColor(getResources().getColor(R.color.theWild));
+                            }
+                            return textView;
+                        }
+
+
+
+                    };
                     // updating listview
                     lv.setAdapter(adapter);
+
+
                 }
             });
 
         }
 
+        //stores number of drinks as shared preference variable
+    }
+
+    public void storeSelectedItemsList (ArrayList<String> selectedItemsList) {
+        SharedPreferences mSharedPreferences = getSharedPreferences("selected items list", MODE_PRIVATE);
+        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+        Set<String> stringSet = new HashSet<String>(selectedItemsList);
+        mEditor.putStringSet("animals", stringSet);
+        mEditor.apply();
+    }
+
+    private Set<String> getSelectedItemsList() {
+        SharedPreferences mSharedPreferences = getSharedPreferences("selected items list", MODE_PRIVATE);
+        Set<String> stringSet  = mSharedPreferences.getStringSet("animals", null);
+        return stringSet;
     }
 }
-
-

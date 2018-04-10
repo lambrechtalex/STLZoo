@@ -110,6 +110,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Intent eventsAct = new Intent(getApplicationContext(), EventsActivity.class);
                     startActivity(eventsAct);
                 }
+                if(menuItem.getItemId() == R.id.toDoList) {
+                    Intent todoAct = new Intent(getApplicationContext(), ToDoList.class);
+                    startActivity(todoAct);
+                }
                 mDrawerLayout.closeDrawers();
                 return true;
 

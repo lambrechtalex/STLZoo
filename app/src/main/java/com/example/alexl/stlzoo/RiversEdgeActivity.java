@@ -213,6 +213,10 @@ public class RiversEdgeActivity extends AppCompatActivity {
                     Intent eventsAct = new Intent(getApplicationContext(), EventsActivity.class);
                     startActivity(eventsAct);
                 }
+                if(menuItem.getItemId() == R.id.toDoList) {
+                    Intent todoAct = new Intent(getApplicationContext(), ToDoList.class);
+                    startActivity(todoAct);
+                }
                 mDrawer.closeDrawers();
                 return true;
 
@@ -247,10 +251,8 @@ public class RiversEdgeActivity extends AppCompatActivity {
                     public PopupWindow (View contentView, int width, int height)
                         Create a new non focusable popup window which can display the contentView.
                         The dimension of the window must be passed to this constructor.
-
                         The popup does not provide any background. This should be handled by
                         the content view.
-
                     Parameters
                         contentView : the popup's content
                         width : the popup's width
@@ -305,7 +307,6 @@ public class RiversEdgeActivity extends AppCompatActivity {
                         Learn WindowManager.LayoutParams for more information on how gravity and the x
                         and y parameters are related. Specifying a gravity of NO_GRAVITY is similar
                         to specifying Gravity.LEFT | Gravity.TOP.
-
                     Parameters
                         parent : a parent view to get the getWindowToken() token from
                         gravity : the gravity which controls the placement of the popup window
@@ -332,7 +333,6 @@ public class RiversEdgeActivity extends AppCompatActivity {
             inflater.inflate(R.menu.drawer, menu);
             return true;
         }
-
     */
     // Response from Edit Product Activity
     @Override
