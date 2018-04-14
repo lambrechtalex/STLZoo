@@ -36,6 +36,8 @@ public class NotificationService extends Service {
         String event_name = intent.getStringExtra("Event Name");
         NOTIFICATION_ID = Integer.parseInt(broadcastId);
 
+
+        Log.e("broadcastID and event name in notifciation", NOTIFICATION_ID + " " + event_name);
             Intent toDoIntent = new Intent(this, ToDoList.class);
             toDoIntent.putExtra("broadcast Int", broadcastId);
             PendingIntent mainPI = PendingIntent.getActivity(this, 0, toDoIntent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -53,7 +55,7 @@ public class NotificationService extends Service {
             }
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    //.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_icon_small))
+                    .setSmallIcon(R.drawable.brown_square)
                     .setContentTitle("Saint Louis Zoo")
                     .setContentText(event_name+" is starting soon!")
                     //.setFullScreenIntent(yesIntent1, true)
@@ -61,11 +63,11 @@ public class NotificationService extends Service {
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setAutoCancel(true);
 
-            builder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
-            builder.setDefaults(Notification.DEFAULT_SOUND);
+           // builder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
+           // builder.setDefaults(Notification.DEFAULT_SOUND);
 
 
-            //builder.setContentIntent(mainPI);
+            builder.setContentIntent(mainPI);
             //NotificationManagerCompat nManager = NotificationManagerCompat.from(this);
             //nManager.notify(NOTIFICATION_ID, builder.build());
             startForeground(NOTIFICATION_ID, builder.build());

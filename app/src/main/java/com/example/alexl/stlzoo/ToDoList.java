@@ -1,7 +1,9 @@
 package com.example.alexl.stlzoo;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -44,9 +46,9 @@ public class ToDoList extends AppCompatActivity {
     private AlarmManager alarmManager;
     private Intent resultIntent;
     private PendingIntent pIntent;
+    public static final String CHANNEL_ID = "com.samalex.slucapstone.ANDROID";
 
 
-    String countryList[] = {"India", "China", "australia", "Portugle", "America", "NewZealand"};
 
     @Override   protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +94,16 @@ public class ToDoList extends AppCompatActivity {
             toDoListItems.add(""+timeItems.get(x)+": "+nameItems.get(x));
         }
 
-        startAlarm();
+        //startAlarm();
+
+        String broadcastStr = getIntent().getStringExtra("broadcast Int");
+        if (broadcastStr != null){
+            int broadcastInt = Integer.parseInt(broadcastStr);
+            NotificationManager manager = (NotificationManager) ToDoList.this.getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.cancel(broadcastInt);
+            manager.deleteNotificationChannel(CHANNEL_ID);
+        }
+
 
         textView = findViewById(R.id.textView);
         textView.setText("To-Do List");
@@ -218,10 +229,11 @@ public class ToDoList extends AppCompatActivity {
             Log.e("morningCal", morningCal.getTimeInMillis()+"");
 
             Intent intent = new Intent(ToDoList.this, TimerReceiver.class);
-            intent.putExtra("broadcast Int", i);
+            intent.putExtra("broadcast Int", (i+1)+"");
             intent.putExtra("Event Name", toDoListItems.get(i));
+            Log.e("index;", i+"");
             // Loop counter `i` is used as a `requestCode`
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(ToDoList.this, i, intent, 0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(ToDoList.this, i+1, intent, 0);
             mgrAlarm.set(AlarmManager.RTC_WAKEUP, morningCal.getTimeInMillis(), pendingIntent);
 
             // Single alarms in 1, 2, ..., 10 minutes (in `i` minutes)

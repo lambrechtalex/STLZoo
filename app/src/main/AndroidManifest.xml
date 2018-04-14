@@ -86,6 +86,14 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label="ToDoList" >
         </activity>
+        <receiver
+            android:name=".TimerReceiver"
+           >
+        </receiver>
+        <service
+            android:name=".NotificationService"
+            >
+        </service>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
