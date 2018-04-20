@@ -54,7 +54,7 @@
         <activity
         android:name=".HistoricHillActivity"
         android:theme="@style/AppTheme.NoActionBar"
-        android:label="HistoricHillActivity" >
+        android:label="Historic Hill" >
         </activity>
         <activity
             android:name=".LakesideCrossingActivity"
@@ -64,12 +64,12 @@
         <activity
             android:name=".RedRocksActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:label="Red Rocks Activity" >
+            android:label="Red Rocks" >
         </activity>
         <activity
             android:name=".TheWildActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:label="The WIld Activity" >
+            android:label="The Wild" >
         </activity>
         <activity
             android:name=".DiningActivity"
@@ -84,7 +84,7 @@
         <activity
             android:name=".ToDoList"
             android:theme="@style/AppTheme.NoActionBar"
-            android:label="ToDoList" >
+            android:label="To-Do List" >
         </activity>
 
         <!--
