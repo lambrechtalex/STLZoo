@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
@@ -178,7 +179,8 @@ public class EventsActivity extends AppCompatActivity {
         CharSequence headerText = DateFormat.format("MMM dd, yyyy", d.getTime());
         currentDate = s.toString();
 
-        header.setText("Events for: " + headerText);
+        header.setText(headerText);
+        header.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         nvView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 

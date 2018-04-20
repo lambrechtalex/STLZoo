@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -94,6 +95,9 @@ public class DiscoveryCenterActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_animals);
+        final View view = findViewById(R.id.drawer_layout);
+        view.setBackgroundColor(getResources().getColor(R.color.discoveryCenter));
+
 
         // Hashmap for ListView
         animalsList = new ArrayList<HashMap<String, String>>();
@@ -114,6 +118,7 @@ public class DiscoveryCenterActivity extends AppCompatActivity {
 
         // Get listview
         lv = (ListView) findViewById(R.id.animals_list);
+        lv.setBackground(new ColorDrawable(getResources().getColor(R.color.discoveryCenter)));
 
 
         TextView header = findViewById(R.id.header);
@@ -158,6 +163,8 @@ public class DiscoveryCenterActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        actionbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.discoveryCenterDark)));
+
 
         // Find our drawer view
         mDrawer = findViewById(R.id.drawer_layout);
@@ -268,18 +275,22 @@ public class DiscoveryCenterActivity extends AppCompatActivity {
         // Get a reference for the custom view close button
         ImageButton closeButton = (ImageButton) customView.findViewById(R.id.ib_close);
         TextView animal_name_tv = (TextView) customView.findViewById(R.id.animal_name);
+        animal_name_tv.setTextColor(getResources().getColor(R.color.discoveryCenterDark));
         animal_name_tv.setText(Animal_ID);
         TextView species_name_tv = (TextView) customView.findViewById(R.id.species_name);
         species_name_tv.setText(scientific_name);
+        species_name_tv.setTextColor(getResources().getColor(R.color.discoveryCenterDark));
         TextView region_name_tv = (TextView) customView.findViewById(R.id.region_name);
         region_name_tv.setText(region);
+        region_name_tv.setTextColor(getResources().getColor(R.color.discoveryCenterDark));
         TextView diet_name_tv = (TextView) customView.findViewById(R.id.diet_name);
         diet_name_tv.setText(diet);
+        diet_name_tv.setTextColor(getResources().getColor(R.color.discoveryCenterDark));
         TextView status_name_tv = (TextView) customView.findViewById(R.id.status_name);
         status_name_tv.setText(end_status);
+        status_name_tv.setTextColor(getResources().getColor(R.color.discoveryCenterDark));
         RelativeLayout relLayout = (RelativeLayout) customView.findViewById(R.id.rl_custom_layout);
-        relLayout.setBackgroundColor(getResources().getColor(R.color.discoveryCenter));
-
+        relLayout.setBackgroundColor(getResources().getColor(R.color.white));
         // Set a click listener for the popup window close button
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -448,7 +459,7 @@ public class DiscoveryCenterActivity extends AppCompatActivity {
 
                             View view = super.getView(position, convertView, parent);
                             TextView textView = (TextView) view.findViewById(R.id.Name);
-                            textView.setTextColor(getResources().getColor(R.color.discoveryCenter));
+                            textView.setTextColor(getResources().getColor(R.color.white));
 
                             return textView;
 

@@ -59,7 +59,7 @@
         <activity
             android:name=".LakesideCrossingActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:label="Discovery Center" >
+            android:label="Lakeside Crossing" >
         </activity>
         <activity
             android:name=".RedRocksActivity"

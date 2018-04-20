@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -103,10 +104,25 @@ public class ToDoList extends AppCompatActivity {
             manager.cancel(broadcastInt);
             manager.deleteNotificationChannel(CHANNEL_ID);
         }
-
-
         textView = findViewById(R.id.textView);
-        textView.setText("To-Do List");
+
+        String currentDate;
+        Date d = new Date();
+        CharSequence s  = DateFormat.format("yyyy-MM-dd ", d.getTime());
+        CharSequence headerText = DateFormat.format("MMM dd, yyyy", d.getTime());
+        currentDate = s.toString();
+
+        if(selectedItems.isEmpty()){
+            textView.setText("No events added - go to Events tab");
+            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        }else{
+            textView.setText(headerText);
+            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        }
+
+
+
 
         simpleList = (ListView)findViewById(R.id.animals_list);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.list_animal, R.id.Name, toDoListItems);

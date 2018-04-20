@@ -6,9 +6,14 @@
     <color name="riversEdge">#b65415</color>
     <color name="riversEdgeDark">#7c3c1a</color>
     <color name="theWild">#534e86</color>
+    <color name="theWildDark">#4a3156</color>
     <color name="lakesideCrossing">#e7a714</color>
+    <color name="lakesideCrossingDark">#7a5521</color>
     <color name="discoveryCenter">#4c83c3</color>
+    <color name="discoveryCenterDark">#254d77</color>
     <color name="historicHill">#949a50</color>
+    <color name="historicHillDark">#0d5c42</color>
     <color name="redRocks">#d31346</color>
+    <color name="redRocksDark">#8b172a</color>
     <color name="white">#ffffff</color>
 </resources>

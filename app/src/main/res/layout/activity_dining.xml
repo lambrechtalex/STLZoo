@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="30dp"
-                    android:background="@color/riversEdge"
+                    android:background="@color/riversEdgeDark"
                     android:textColor="@color/white"
                     android:textAlignment="center"
                     android:text="River's Edge"/>
@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="30dp"
-                    android:background="@color/theWild"
+                    android:background="@color/theWildDark"
                     android:textColor="@color/white"
                     android:textAlignment="center"
                     android:text="The Wild"/>
@@ -61,7 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="30dp"
-                    android:background="@color/discoveryCenter"
+                    android:background="@color/discoveryCenterDark"
                     android:textColor="@color/white"
                     android:textAlignment="center"
                     android:text="Discovery Corner"/>
@@ -73,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="30dp"
-                    android:background="@color/lakesideCrossing"
+                    android:background="@color/lakesideCrossingDark"
                     android:textColor="@color/white"
                     android:textAlignment="center"
                     android:text="Lakeside Crossing"/>
@@ -85,7 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="30dp"
-                    android:background="@color/redRocks"
+                    android:background="@color/redRocksDark"
                     android:textColor="@color/white"
                     android:textAlignment="center"
                     android:text="Red Rocks"/>

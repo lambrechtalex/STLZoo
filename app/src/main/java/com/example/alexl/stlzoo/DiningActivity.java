@@ -19,6 +19,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -102,10 +103,18 @@ public class DiningActivity extends AppCompatActivity {
 
 
         lv1 = (ListView) findViewById(R.id.list_1);
+        lv1.setBackground(new ColorDrawable(getResources().getColor(R.color.riversEdge)));
+
         lv2 = (ListView) findViewById(R.id.list_2);
+        lv2.setBackground(new ColorDrawable(getResources().getColor(R.color.theWild)));
         lv3 = (ListView) findViewById(R.id.list_3);
+        lv3.setBackground(new ColorDrawable(getResources().getColor(R.color.discoveryCenter)));
+
         lv5 = (ListView) findViewById(R.id.list_5);
+        lv5.setBackground(new ColorDrawable(getResources().getColor(R.color.lakesideCrossing)));
+
         lv6 = (ListView) findViewById(R.id.list_6);
+        lv6.setBackground(new ColorDrawable(getResources().getColor(R.color.redRocks)));
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = findViewById(R.id.toolbar);
@@ -367,7 +376,7 @@ public class DiningActivity extends AppCompatActivity {
                             Log.d("testing", position+"");
                             int section_ids = section_IDs.get(position);
                             Log.d("section_ids", section_ids+"");
-                            textView.setTextColor(getResources().getColor(R.color.riversEdge));
+                            textView.setTextColor(getResources().getColor(R.color.white));
 
                             return textView;
 
@@ -387,7 +396,7 @@ public class DiningActivity extends AppCompatActivity {
                             Log.d("testing", position+"");
                             int section_ids = section_IDs2.get(position);
                             Log.d("section_ids", section_ids+"");
-                            textView.setTextColor(getResources().getColor(R.color.theWild));
+                            textView.setTextColor(getResources().getColor(R.color.white));
                             return textView;
 
                         }
@@ -405,7 +414,7 @@ public class DiningActivity extends AppCompatActivity {
                             Log.d("testing", position+"");
                             int section_ids = section_IDs3.get(position);
                             Log.d("section_ids", section_ids+"");
-                            textView.setTextColor(getResources().getColor(R.color.discoveryCenter));
+                            textView.setTextColor(getResources().getColor(R.color.white));
                             return textView;
 
                         }
@@ -424,7 +433,7 @@ public class DiningActivity extends AppCompatActivity {
                             Log.d("testing", position+"");
                             int section_ids = section_IDs5.get(position);
                             Log.d("section_ids", section_ids+"");
-                            textView.setTextColor(getResources().getColor(R.color.lakesideCrossing));
+                            textView.setTextColor(getResources().getColor(R.color.white));
                             return textView;
 
                         }
@@ -442,7 +451,7 @@ public class DiningActivity extends AppCompatActivity {
                             Log.d("testing", position+"");
                             int section_ids = section_IDs6.get(position);
                             Log.d("section_ids", section_ids+"");
-                            textView.setTextColor(getResources().getColor(R.color.redRocks));
+                            textView.setTextColor(getResources().getColor(R.color.white));
                             return textView;
 
                         }
