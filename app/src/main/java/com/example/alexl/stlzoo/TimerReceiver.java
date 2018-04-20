@@ -26,6 +26,8 @@ public class TimerReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         broadcastStr = intent.getStringExtra("broadcast Int");
+        Log.e("broadcast ID in receiver", ""+broadcastStr);
+
         event_name = intent.getStringExtra("Event Name");
         broadcastID = Integer.parseInt(broadcastStr);
 
@@ -36,6 +38,8 @@ public class TimerReceiver extends BroadcastReceiver {
         service_intent.putExtra("Event Name", event_name);
         //This is where it crashed
         context.startForegroundService(service_intent);
+
+
     }
 
 }

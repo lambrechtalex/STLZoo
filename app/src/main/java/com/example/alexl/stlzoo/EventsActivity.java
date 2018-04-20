@@ -108,13 +108,10 @@ public class EventsActivity extends AppCompatActivity {
         // Loading products in Background Thread
         new LoadAllAnimals().execute();
 
-
-
-
         // Get listview
         lv = (ListView) findViewById(R.id.animals_list);
         //final ListView lv = getListView();
-        lv.setChoiceMode(lv.CHOICE_MODE_MULTIPLE);
+        //lv.setChoiceMode(lv.CHOICE_MODE_MULTIPLE);
 
         Set<String> selectedItemsSet = getSelectedItemsList();
         if (selectedItemsSet != null) {
@@ -136,10 +133,10 @@ public class EventsActivity extends AppCompatActivity {
                 selectedItems.add(name);
                 positionItems.add(position);
 
-
                 TextView textView = view.findViewById(R.id.Name);
                 textView.setTextColor(getResources().getColor(R.color.colorAccent));
 
+                Log.e("textview in clicklistener", textView.getText()+"");
 
 
                 if (selectedItems.size()!=0) {
@@ -158,10 +155,6 @@ public class EventsActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-        // Set a Toolbar to replace the ActionBar.
 
 
         // Find our drawer view
@@ -186,7 +179,6 @@ public class EventsActivity extends AppCompatActivity {
         currentDate = s.toString();
 
         header.setText("Events for: " + headerText);
-
 
         nvView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -239,27 +231,7 @@ public class EventsActivity extends AppCompatActivity {
             }
         });
 
-     /*   lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, selectedItems) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View row = super.getView(position, convertView, parent);
-
-                for(int i=0; i<selectedItems.size(); i++){
-                    if(getItem(position).equals(selectedItems.get(i))){
-                        row.setBackgroundColor (Color.RED);
-                    }
-                }
-                return row;
-            }
-        });*/
-
     }
-
-    /*public void onListItemClick(ListView parent, View v,int position,long id){
-        CheckedTextView item = (CheckedTextView) v;
-        Toast.makeText(this, " checked : " +
-                item.isChecked(), Toast.LENGTH_SHORT).show();
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -269,13 +241,7 @@ public class EventsActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.drawer, menu);
-        return true;
-    }*/
+    }
 
     // Response from Edit Product Activity
     @Override
@@ -357,7 +323,6 @@ public class EventsActivity extends AppCompatActivity {
                             diningList.add(map);
 
                         }
-                        // adding HashList to ArrayList
 
                     }
                 }
@@ -386,8 +351,6 @@ public class EventsActivity extends AppCompatActivity {
                         selectedItems.add(str); */
 
 
-                    Log.e("textView",""+selectedItems);
-
 
                     ListAdapter adapter = new SimpleAdapter(
                             EventsActivity.this, diningList,
@@ -401,23 +364,56 @@ public class EventsActivity extends AppCompatActivity {
                             View view = super.getView(position, convertView, parent);
                             LinearLayout lin1 = (LinearLayout) view.findViewById(R.id.lin1);
 
-                            if(!selectedItems.isEmpty()) {
+                            final Set<String> selectedItemsSet = getSelectedItemsList();
+                            final ArrayList<String> selectedItems1 = new ArrayList<String>();
+                            if(selectedItemsSet != null){
+                                for (String str : selectedItemsSet)
+                                    selectedItems1.add(str);
+                            }
+
+                            Log.e("selectedItems 1 fa alselfsldfls", ""+selectedItems1);
+                            if(!selectedItems1.isEmpty()) {
+                                boolean inTheList = false;
+
+                                textView= view.findViewById(R.id.Name);
 
 
-                                for(int i=0; i<selectedItems.size(); i++){
-                                    String[] substr = selectedItems.get(i).split(",");
+                                for (int i=0;i<selectedItems1.size();i++){
+                                    String[] substr = selectedItems1.get(i).split(",");
+                                    String getItem = substr[1].replace(substr[1].substring(substr[1].length()-1), "");
+                                    String[] nameStr = getItem.split("=");
+                                    if(nameStr[1].equals(textView.getText())) {
+                                        inTheList = true;
+                                    }
+                                }
+
+                                if((position == 0) && (inTheList == true)){
+                                    textView.setTextColor(getResources().getColor(R.color.colorAccent));
+                                }else{
+                                    textView.setTextColor(getResources().getColor(R.color.theWild));
+                                }
+
+                                for(int i=0; i<selectedItems1.size(); i++){
+                                    String[] substr = selectedItems1.get(i).split(",");
                                     String getItem = substr[1].replace(substr[1].substring(substr[1].length()-1), "");
                                     String[] nameStr = getItem.split("=");
                                     textView= view.findViewById(R.id.Name);
                                     textView2 = view.findViewById(R.id.Animal_ID);
                                     textView2.setVisibility(View.VISIBLE);
                                     if(textView.getText().equals(nameStr[1])){
-
+                                        //Log.e("textview", textView.getText()+"");
+                                        Log.e("textview in for loop else", textView.getText()+"");
                                         textView.setTextColor(getResources().getColor(R.color.colorAccent));
+                                    }else{
+                                        if(textView.getCurrentTextColor() != getResources().getColor(R.color.colorAccent)){
+                                            textView.setTextColor(getResources().getColor(R.color.theWild));
+                                        }
+
                                     }
                                 }
                             }else{
                                 textView = view.findViewById(R.id.Name);
+                                Log.e("hello in else", textView.getText()+"");
                                 textView.setTextColor(getResources().getColor(R.color.theWild));
                                 textView2 = view.findViewById(R.id.Animal_ID);
                                 textView2.setVisibility(View.VISIBLE);
