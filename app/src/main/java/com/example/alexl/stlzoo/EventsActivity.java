@@ -317,8 +317,9 @@ public class EventsActivity extends AppCompatActivity {
                         // adding each child node to HashMap key => value
                         //map.put("Animal_ID", id);
 
-                        Log.d("Today's date: ", currentDate);
-                        if (date.equals("2018-12-27") | date.equals("2018-12-03") | date.equals("2019-02-09")) {
+                        Log.d("current date", currentDate);
+                        if (date.equals("2018-04-26") & ((name.equals("Meet and Greet at 12") || (name.equals("Meet and Greet at 12:30")) || (name.equals("Meet and Greet at 1"))))) {
+
                             //  map.put("Date",date);
                             map.put(TAG_NAME, name);
                             map.put("Time", time);
@@ -386,6 +387,7 @@ public class EventsActivity extends AppCompatActivity {
                                     String[] nameStr = getItem.split("=");
                                     if(nameStr[1].equals(textView.getText())) {
                                         inTheList = true;
+                                        textView.setTextColor(getResources().getColor(R.color.colorAccent));
                                     }
                                 }
 

@@ -29,18 +29,21 @@
         <ListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/toDoList"/>
+
         <!-- The main content view where fragments are loaded -->
         <FrameLayout
             android:id="@+id/flContent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <Button
+            android:layout_below="@id/flContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/toDoList"/>
     </LinearLayout>
 
     <!-- The navigation drawer that comes from the left -->

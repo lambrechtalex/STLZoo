@@ -28,6 +28,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TimeZone;
 
 /**
  * Created by samikshasm on 4/5/18.
@@ -39,6 +40,7 @@ public class ToDoList extends AppCompatActivity {
     private ArrayList<String> toDoListItems = new ArrayList<>();
     private ArrayList<String> timeItems = new ArrayList<>();
     private ArrayList<Integer> timeIntItems = new ArrayList<>();
+    private ArrayList<Integer> minuteIntItems = new ArrayList<>();
     private ArrayList<String> nameItems = new ArrayList<>();
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -85,7 +87,23 @@ public class ToDoList extends AppCompatActivity {
                     timeItems.add(equalsSign[1]);
                     String[] timeSubstr = equalsSign[1].split(":");
                     Integer timeHour = Integer.parseInt(timeSubstr[0]);
-                    timeIntItems.add(timeHour);
+                    Integer timeMinutes = Integer.parseInt(timeSubstr[1]);
+                    Log.e("timeminites", ""+timeMinutes);
+                    Calendar calendar = Calendar.getInstance();
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                    int minutes = calendar.get(Calendar.MINUTE);
+                    Log.e("hour", ""+hour);
+                    Log.e("minutes",""+minutes);
+                    if (timeHour > hour){
+                        timeIntItems.add(timeHour);
+                        minuteIntItems.add(timeMinutes);
+                    }
+                    else if ((timeHour == hour)) {
+                        if(timeMinutes > minutes) {
+                            timeIntItems.add(timeHour);
+                            minuteIntItems.add(timeMinutes);
+                        }
+                    }
                 }
             }
         }
@@ -95,7 +113,7 @@ public class ToDoList extends AppCompatActivity {
             toDoListItems.add(""+timeItems.get(x)+": "+nameItems.get(x));
         }
 
-        //startAlarm();
+        startAlarm();
 
         String broadcastStr = getIntent().getStringExtra("broadcast Int");
         if (broadcastStr != null){
@@ -224,8 +242,6 @@ public class ToDoList extends AppCompatActivity {
         AlarmManager mgrAlarm = (AlarmManager) getSystemService(ALARM_SERVICE);
         ArrayList<PendingIntent> intentArray = new ArrayList<PendingIntent>();
 
-        Log.e("timeIntItems",timeIntItems+"");
-
         ArrayList<Integer> timeIntTest = new ArrayList<Integer>();
         timeIntTest.add(22);
 
@@ -237,17 +253,22 @@ public class ToDoList extends AppCompatActivity {
             int difference = Math.abs(setTimeTo-hour);
             long diffHours = difference % 24;
 
-            Log.e("broadcast int",  ""+i);
-            Log.e("event name", toDoListItems.get(i));
+
+            Log.e("timeIntItems", timeIntItems.get(i)+"");
+            Log.e("minuteIntItems", minuteIntItems.get(i)+"");
+
 
             Calendar morningCal = Calendar.getInstance();
+            //morningCal.setTimeZone(TimeZone.getTimeZone("CST"));
+            morningCal.set(Calendar.HOUR_OF_DAY, timeIntItems.get(i));
+            morningCal.set(Calendar.MINUTE, minuteIntItems.get(i));
 
             Log.e("morningCal", morningCal.getTimeInMillis()+"");
 
             Intent intent = new Intent(ToDoList.this, TimerReceiver.class);
             intent.putExtra("broadcast Int", (i+1)+"");
             intent.putExtra("Event Name", toDoListItems.get(i));
-            Log.e("index;", i+"");
+            //Log.e("index;", i+"");
             // Loop counter `i` is used as a `requestCode`
             PendingIntent pendingIntent = PendingIntent.getBroadcast(ToDoList.this, i+1, intent, 0);
             mgrAlarm.set(AlarmManager.RTC_WAKEUP, morningCal.getTimeInMillis(), pendingIntent);
