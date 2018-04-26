@@ -318,7 +318,7 @@ public class EventsActivity extends AppCompatActivity {
                         //map.put("Animal_ID", id);
 
                         Log.d("current date", currentDate);
-                        if (date.equals("2018-04-26") & ((name.equals("Meet and Greet at 12") || (name.equals("Meet and Greet at 12:30")) || (name.equals("Meet and Greet at 1"))))) {
+                        if (date.equals("2018-04-26") & ((name.equals("Meet and Greet at 12:10") || (name.equals("Meet and Greet at 12:20")) || (name.equals("Meet and Greet at 12:30")) || (name.equals("Meet and Greet at 12:40"))))) {
 
                             //  map.put("Date",date);
                             map.put(TAG_NAME, name);
