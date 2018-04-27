@@ -86,6 +86,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label="To-Do List" >
         </activity>
+
         <receiver
             android:name=".TimerReceiver"
            >

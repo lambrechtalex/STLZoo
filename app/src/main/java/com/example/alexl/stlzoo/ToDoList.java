@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
@@ -205,6 +206,14 @@ public class ToDoList extends AppCompatActivity {
                 if(menuItem.getItemId() == R.id.events) {
                     Intent eventsAct = new Intent(getApplicationContext(), EventsActivity.class);
                     startActivity(eventsAct);
+                }
+                if(menuItem.getItemId() == R.id.donate) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.stlzoo.org/give"));
+                    startActivity(browserIntent);
+                }
+                if(menuItem.getItemId() == R.id.adopt) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.stlzoo.org/give/zooparentsprogram/animaladoptionlist/"));
+                    startActivity(browserIntent);
                 }
                 mDrawer.closeDrawers();
                 return true;

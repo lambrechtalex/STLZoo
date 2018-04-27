@@ -42,5 +42,14 @@
         android:id="@+id/toDoList"
         android:icon="@drawable/ic_assignment_black_24dp"
         android:title="ToDoList" />
+    <item
+        android:id="@+id/donate"
+        android:icon="@drawable/ic_attach_money_black_24dp"
+        android:title="Donate" />
+    <item
+        android:id="@+id/adopt"
+        android:icon="@drawable/ic_loyalty_black_24dp"
+        android:title="Adopt an Animal" />
+
 </group>
 </menu>

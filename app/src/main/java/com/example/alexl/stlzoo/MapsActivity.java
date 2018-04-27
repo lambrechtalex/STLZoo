@@ -1,6 +1,7 @@
 package com.example.alexl.stlzoo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -113,6 +114,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if(menuItem.getItemId() == R.id.toDoList) {
                     Intent todoAct = new Intent(getApplicationContext(), ToDoList.class);
                     startActivity(todoAct);
+                }
+                if(menuItem.getItemId() == R.id.donate) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.stlzoo.org/give"));
+                    startActivity(browserIntent);
+                }
+                if(menuItem.getItemId() == R.id.adopt) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.stlzoo.org/give/zooparentsprogram/animaladoptionlist/"));
+                    startActivity(browserIntent);
                 }
                 mDrawerLayout.closeDrawers();
                 return true;

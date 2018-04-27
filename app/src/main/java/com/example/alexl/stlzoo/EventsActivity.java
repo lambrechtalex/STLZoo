@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -226,6 +227,14 @@ public class EventsActivity extends AppCompatActivity {
                 if(menuItem.getItemId() == R.id.toDoList) {
                     Intent todoAct = new Intent(getApplicationContext(), ToDoList.class);
                     startActivity(todoAct);
+                }
+                if(menuItem.getItemId() == R.id.donate) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.stlzoo.org/give"));
+                    startActivity(browserIntent);
+                }
+                if(menuItem.getItemId() == R.id.adopt) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.stlzoo.org/give/zooparentsprogram/animaladoptionlist/"));
+                    startActivity(browserIntent);
                 }
                 mDrawer.closeDrawers();
                 return true;
